@@ -6,6 +6,7 @@ import FooterCommon from './../components/footer-common.jsx'
 
 import 'antd/lib/layout/style/css'
 
+
 const { Header, Content, Footer } = Layout
 
 class App extends React.Component {
