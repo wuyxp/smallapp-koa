@@ -31,16 +31,51 @@ module.exports = {
     }
 
     if ( formData.source === 'form' && result.success === true ) {
+
+      // 存储session
       let session = ctx.session
       session.isLogin = true
       session.userName = userResult.name
-      session.userId = userResult.id
+      session.userId = userResult.id;
+      // 存储cookie
+      ctx.cookies.set(
+        'userinfo',
+        JSON.stringify(userResult),
+        {
+          httpOnly: false,  // 是否只用于http请求中获取
+          overwrite: false  // 是否允许重写
+        }
+      )
 
-      ctx.redirect('/work')
+      ctx.redirect('/')
     } else {
       ctx.body = result
     }
   },
+
+  /**
+   * 退出登录
+   * @param  {obejct} ctx 上下文对象
+   */
+
+   async signOut( ctx ){
+    // 删除session
+    let session = ctx.session
+    session.isLogin = false
+    delete session.userName
+    delete session.userId
+
+    // 删除cookie
+    ctx.cookies.set(
+      'userinfo',
+      null,
+      {
+        maxAge: 0,
+        signed:false
+      }
+    )
+    ctx.redirect('/login');
+   },
 
   /**
    * 注册操作
@@ -63,7 +98,6 @@ module.exports = {
     }
 
     let existOne  = await userInfoService.getExistOne(formData)
-    console.log( existOne )
 
     if ( existOne  ) {
       if ( existOne .name === formData.userName ) {
@@ -78,19 +112,39 @@ module.exports = {
       }
     }
 
-
-    let userResult = await userInfoService.create({
+    let createData = {
       email: formData.email,
       password: formData.password,
       name: formData.userName,
       create_time: new Date().getTime(),
       level: 1,
-    })
+    }
 
-    console.log( userResult )
+    let userResult = await userInfoService.create(createData)
 
     if ( userResult && userResult.insertId * 1 > 0) {
       result.success = true
+      
+      // 存储完毕后，重新查询一下id，将返回值，放在session和cookie中，防止跳转页面消失
+      let userOne = await userInfoService.getExistOne(formData)
+
+      if(userOne){
+        // 存储session
+        let session = ctx.session
+        session.isLogin = true
+        session.userName = userOne.name
+        session.userId = userOne.id;
+        // 存储cookie
+        ctx.cookies.set(
+          'userinfo',
+          JSON.stringify(userOne),
+          {
+            httpOnly: false,  // 是否只用于http请求中获取
+            overwrite: false  // 是否允许重写
+          }
+        )
+      }
+      
     } else {
       result.message = userCode.ERROR_SYS
     }

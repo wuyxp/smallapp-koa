@@ -8,6 +8,20 @@ import 'antd/lib/layout/style/css'
 const { Header, Content, Footer } = Layout
 
 class App extends React.Component {
+  state = {
+    time: 10,
+  };
+  componentDidMount(){
+    setInterval(() => {
+      if(this.state.time === 0){
+        location.href = '/';
+      }else{
+        this.setState({
+          time: --this.state.time
+        })
+      }
+    },1000)
+  };
   render() {
     return (
       <Layout className="layout">
@@ -15,7 +29,8 @@ class App extends React.Component {
           <Breadcrumb style={{ margin: '12px 0' }}>
           </Breadcrumb>
           <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
-            <p>error</p>
+            <p>页面错误啦</p>
+            <p>{this.state.time}s 后跳转至首页</p>
           </div>
         </Content>
         <FooterCommon/>
