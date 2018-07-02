@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const path = require('path');
 const sourcePath = path.join(__dirname, './static/src');
 const outputPath = path.join(__dirname, './../output/dist/');
@@ -11,7 +12,7 @@ module.exports = {
     'work' : './static/src/pages/work.js',
     'index' : './static/src/pages/index.js',
     'error' : './static/src/pages/error.js',
-    vendor: ['react', 'react-dom', 'whatwg-fetch', 'antd'],
+    vendor: ['react', 'react-dom', 'whatwg-fetch'],
   },
   output: {
     path: outputPath,
@@ -42,12 +43,18 @@ module.exports = {
       {
         test: /\.css$/,
         include: /node_modules/,
-        loader: 'style-loader!css-loader'
+        use:ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: 'css-loader'
+        }) 
       },
       {
         test: /\.css$/,
         exclude: /node_modules/,
-        loader: 'style-loader!css-loader?modules'
+        use:ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: 'css-loader?modules'
+        })
       },
       {
         test: /\.scss$/,
@@ -81,5 +88,15 @@ module.exports = {
       minChunks: Infinity,
       filename: 'js/[name].js'
     }),
+     //在 plugin 中添加
+    new CompressionWebpackPlugin({ //gzip 压缩
+      asset: '[path].gz[query]',
+      algorithm: 'gzip',
+      test: new RegExp(
+          '\\.(js|css)$'    //压缩 js 与 css
+      ),
+      threshold: 10240,
+      minRatio: 0.8
+    })
   ]
 };
