@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, message } from 'antd'
+import { Form, Input, Tooltip, Icon, Select, Checkbox, Button, message } from 'antd'
 import { signUpApi } from './../api/sign-up'
 
 const FormItem = Form.Item

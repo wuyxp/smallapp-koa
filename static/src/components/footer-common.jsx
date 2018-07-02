@@ -1,6 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import { Layout, Menu, Breadcrumb } from 'antd'
+import { Layout } from 'antd'
 const {  Footer } = Layout
 
 class FooterCommon extends React.Component {
