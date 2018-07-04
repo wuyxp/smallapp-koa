@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const sourcePath = path.join(__dirname, './static/src');
 const outputPath = path.join(__dirname, './../output/dist/');
@@ -12,7 +13,7 @@ module.exports = {
     'work' : './static/src/pages/work.js',
     'index' : './static/src/pages/index.js',
     'error' : './static/src/pages/error.js',
-    vendor: ['react', 'react-dom', 'whatwg-fetch'],
+    'vendor': ['react', 'react-dom', 'whatwg-fetch'],
   },
   output: {
     path: outputPath,
@@ -82,6 +83,30 @@ module.exports = {
     ]
   },
   plugins: [
+    new HtmlWebpackPlugin({
+      template: './static/src/view/login.html',
+      filename: './login.html',
+      hash: true,
+      chunks: ['vendor', 'login']
+    }),
+    new HtmlWebpackPlugin({
+      template: './static/src/view/work.html',
+      filename: './work.html',
+      hash: true,
+      chunks: ['vendor', 'work']
+    }),
+    new HtmlWebpackPlugin({
+      template: './static/src/view/index.html',
+      filename: './index.html',
+      hash: true,
+      chunks: ['vendor', 'index']
+    }),
+    new HtmlWebpackPlugin({
+      template: './static/src/view/error.html',
+      filename: './error.html',
+      hash: true,
+      chunks: ['vendor', 'error']
+    }),
     new ExtractTextPlugin('css/[name].css'),
     new webpack.optimize.CommonsChunkPlugin({
       names: ['vendor'],

@@ -35,12 +35,12 @@ app.use(bodyParser())
 
 // 配置静态资源加载中间件
 app.use(koaStatic(
-  path.join(__dirname , './../static')
+  path.join(__dirname , '../')
 ))
 
 // 配置服务端模板渲染引擎中间件
-app.use(views(path.join(__dirname, './views'), {
-  extension: 'ejs'
+app.use(views(path.join(__dirname, './../static/output/dist'), {
+  extension: 'html'
 }))
 
 // 初始化路由中间件
