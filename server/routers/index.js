@@ -10,11 +10,11 @@ const login = require('./login')
 const work = require('./work')
 const error = require('./error')
 
-router.use('/', home.routes(), home.allowedMethods())
 router.use('/api', api.routes(), api.allowedMethods())
 router.use('/login', login.routes(), login.allowedMethods())
 router.use('/work', work.routes(), work.allowedMethods())
 router.use('/error', error.routes(), error.allowedMethods())
+router.use('/app', home.routes(), home.allowedMethods())
 
 module.exports = router
 
