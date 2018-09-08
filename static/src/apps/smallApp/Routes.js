@@ -5,13 +5,13 @@ import Home from './view/Home'
 import About from './view/About'
 import NotFound from './view/NotFound'
 
-const Routers = () => (
+const Routers = (props) => (
     <BrowserRouter>
         <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="home" component={Home}/>
-            <Route path="about" component={About}/>
-            <Route path="*" component={NotFound}/>
+            <Route path={props.match.path} exact component={Home} />
+            <Route path={`${props.match.path}/home`} exact component={Home}/>
+            <Route path={`${props.match.path}/about`} exact component={About}/>
+            <Route path={`${props.match.path}/*`} component={NotFound}/>
         </Switch>
     </BrowserRouter>
 )

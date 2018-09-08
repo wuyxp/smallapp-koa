@@ -5,6 +5,7 @@ import FooterCommon from './../components/footer-common.jsx'
 
 import 'antd/lib/layout/style/css'
 
+import { BrowserRouter, Route } from 'react-router-dom'
 import SmallApp from './smallApp/Routes'
 
 const { Header, Content, Footer } = Layout;
@@ -19,7 +20,9 @@ class App extends React.Component {
             <Breadcrumb.Item>Home</Breadcrumb.Item>
           </Breadcrumb>
           <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
-              <SmallApp />
+              <BrowserRouter>
+                  <Route path={"/app/smallapp"} component={SmallApp} />
+              </BrowserRouter>
           </div>
         </Content>
         <FooterCommon />
