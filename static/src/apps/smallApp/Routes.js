@@ -1,12 +1,15 @@
 import React from 'react'
 import {Router, Route,IndexRoute, browserHistory} from 'react-router'
+import {syncHistoryWithStore} from 'react-router-redux'
+import store from './Store'
 
 import Home from './view/Home'
 import About from './view/About'
 import NotFound from './view/NotFound'
 
+const history = syncHistoryWithStore(browserHistory, store);
 const Routers = (props) => (
-  <Router history={browserHistory}>
+  <Router history={history}>
     <Route path={'/app/smallapp/'} component={props.component} >
       <IndexRoute component={Home}/>
       <Route path={`home`}  component={Home}/>
