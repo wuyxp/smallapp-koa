@@ -1,18 +1,18 @@
 import React from 'react'
-import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import {Router, Route,IndexRoute, browserHistory} from 'react-router'
 
 import Home from './view/Home'
 import About from './view/About'
 import NotFound from './view/NotFound'
 
 const Routers = (props) => (
-    <BrowserRouter>
-        <Switch>
-            <Route path={props.match.path} exact component={Home} />
-            <Route path={`${props.match.path}/home`} exact component={Home}/>
-            <Route path={`${props.match.path}/about`} exact component={About}/>
-            <Route path={`${props.match.path}/*`} component={NotFound}/>
-        </Switch>
-    </BrowserRouter>
+  <Router history={browserHistory}>
+    <Route path={'/app/smallapp/'} component={props.component} >
+      <IndexRoute component={Home}/>
+      <Route path={`home`}  component={Home}/>
+      <Route path={`about`}  component={About}/>
+      <Route path={`*`} component={NotFound}/>
+    </Route>
+  </Router>
 )
 export default Routers;
