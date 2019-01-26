@@ -1,12 +1,12 @@
 import React from 'react'
-import { Layout } from 'antd'
-import { Avatar, Icon } from 'antd';
+import {Layout, Menu} from 'antd'
+import {Avatar, Icon} from 'antd';
 
-import { signOutApi } from '../api/sign-out';
+import {signOutApi} from '../api/sign-out';
 
 import 'antd/lib/layout/style/css'
 
-const { Header, Content, Footer } = Layout
+const {Header, Content, Footer} = Layout
 
 const handleSignOut = async () => {
   console.log('退出登录');
@@ -14,25 +14,26 @@ const handleSignOut = async () => {
 };
 
 const generatorAvatar = userinfo => {
-  if(userinfo.url){
+  if (userinfo.url) {
     return <Avatar src={userinfo.url}></Avatar>
-  }else{
-    return <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>{ userinfo.name && userinfo.name.charAt(0)}</Avatar>
+  } else {
+    return <Avatar
+      style={{color: '#f56a00', backgroundColor: '#fde3cf'}}>{userinfo.name && userinfo.name.charAt(0)}</Avatar>
   }
 }
 
 const showInfo = (isLogin, userinfo) => (
-  isLogin ? 
+  isLogin ?
     <div className="yes-login">
-      {generatorAvatar(userinfo)} 
+      {generatorAvatar(userinfo)}
       <span className="user-name">{userinfo.name}</span>
-      <a href="javascript:;" title="退出登录" onClick={handleSignOut}><Icon type="logout" /></a>
+      <a href="javascript:;" title="退出登录" onClick={handleSignOut}><Icon type="logout"/></a>
     </div>
-     :
+    :
     <div className="no-login">
-      <Icon type="frown-o" style={{ fontSize: 16, color: '#ccc' }} />
+      <Icon type="frown-o" style={{fontSize: 16, color: '#ccc'}}/>
       <span>未登录</span>
-      
+
     </div>
 )
 
@@ -40,23 +41,33 @@ class HeaderNav extends React.Component {
   state = {
     defaultLogoUrl: "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTI4AM8aD2S0Q5fPEEeHcBK2QYb9hrHPCcKtRZicKic8m6PG1KZwoQYdhvWARulUeyY41aTFuBicyybYA/132",
     isLogin: false,
-    userinfo:{
-      
-    },
+    userinfo: {},
   };
-  componentDidMount(){
+
+  componentDidMount() {
     const userinfo = Cookies.get('userinfo');
-    if(userinfo){
+    if (userinfo) {
       this.setState({
         isLogin: true,
         userinfo: JSON.parse(userinfo)
       })
     }
   }
+
   render() {
     return (
       <Header>
         <div className="logo"></div>
+        <Menu
+          theme="dark"
+          mode="horizontal"
+          defaultSelectedKeys={['1']}
+          style={{lineHeight: '64px', float: 'left',}}
+        >
+          <Menu.Item key="1">app</Menu.Item>
+          <Menu.Item key="2" disabled={true}>work</Menu.Item>
+          <Menu.Item key="3" disabled={true}>error</Menu.Item>
+        </Menu>
         <div className="user-logo">
           {showInfo(this.state.isLogin, this.state.userinfo)}
         </div>
