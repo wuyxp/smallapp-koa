@@ -25,7 +25,7 @@ class App extends React.Component {
             <Breadcrumb.Item>User</Breadcrumb.Item>
           </Breadcrumb>
           <div style={{ background: 'rgba(255, 255, 255, 0.8)', padding: 24, minHeight: 280 }}>
-            <span>测试一下能否触发jenkins自动build</span>
+            <span>测试一下能否触发jenkins自动build,再测试一下</span>
             <FormGroup />
           </div>
         </Content>
