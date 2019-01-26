@@ -74,6 +74,18 @@ module.exports = {
           use: ['css-loader', 'less-loader']
         })
       },
+      {
+        test: /\.(png|jpg|gif)$/i,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              name: '[name].[ext]',
+              limit: 1024 
+            }
+          }
+        ]
+      }
     ]
   },
   resolve: {

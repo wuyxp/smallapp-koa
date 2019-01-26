@@ -16,6 +16,8 @@ router.use('/work', work.routes(), work.allowedMethods())
 router.use('/error', error.routes(), error.allowedMethods())
 router.use('/app', home.routes(), home.allowedMethods())
 
+router.redirect('/', '/app')
+
 module.exports = router
 
 
